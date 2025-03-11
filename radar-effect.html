@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar Scanning Effect</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+        }
+        #radar {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: rgba(0, 255, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        #scanner {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(90deg, rgba(0,255,0,0.5) 0%, rgba(0,255,0,0) 50%);
+            top: 0;
+            left: 50%;
+            transform-origin: bottom left;
+            animation: scan 4s linear infinite;
+        }
+        @keyframes scan {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .blip {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #0F0;
+            border-radius: 50%;
+            animation: blip 2s ease-out;
+        }
+        @keyframes blip {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="radar">
+        <div id="scanner"></div>
+    </div>
+    <script>
+        const radar = document.getElementById('radar');
+
+        function createBlip() {
+            const blip = document.createElement('div');
+            blip.classList.add('blip');
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 130 + 20;
+            blip.style.left = 150 + Math.cos(angle) * distance + 'px';
+            blip.style.top = 150 + Math.sin(angle) * distance + 'px';
+            radar.appendChild(blip);
+            setTimeout(() => {
+                radar.removeChild(blip);
+            }, 2000);
+        }
+
+        setInterval(createBlip, 1000);
+    </script>
+</body>
+</html>

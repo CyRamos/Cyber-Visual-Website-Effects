@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Effect</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0F0;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #terminal {
+            border: 1px solid #0F0;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+        }
+        #cursor {
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal">
+        <span id="typed"></span><span id="cursor">|</span>
+    </div>
+    <script>
+        const text = "Accessing secure server...\nInitiating backdoor protocol...\nBypass firewall... Complete\nGaining root access...";
+        const typedElement = document.getElementById('typed');
+        let index = 0;
+
+        function typeText() {
+            if (index < text.length) {
+                if (text.charAt(index) === '\n') {
+                    typedElement.innerHTML += '<br>';
+                } else {
+                    typedElement.innerHTML += text.charAt(index);
+                }
+                index++;
+                setTimeout(typeText, Math.random() * 100 + 50);
+            }
+        }
+
+        typeText();
+    </script>
+</body>
+</html>

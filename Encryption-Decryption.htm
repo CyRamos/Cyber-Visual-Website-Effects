@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption/Decryption Animation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #container {
+            text-align: center;
+        }
+        #text {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="text">Hello, World!</div>
+        <button onclick="toggleEncryption()">Encrypt/Decrypt</button>
+    </div>
+    <script>
+        const originalText = "Hello, World!";
+        const encryptedText = "X1@@#, |/|/#[@)!";
+        let isEncrypted = false;
+        const textElement = document.getElementById('text');
+
+        function animateText(from, to, duration) {
+            const start = performance.now();
+            
+            function update(time) {
+                const elapsed = time - start;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                let currentText = '';
+                for (let i = 0; i < to.length; i++) {
+                    if (progress > i / to.length) {
+                        currentText += to[i];
+                    } else if (i < from.length) {
+                        currentText += from[i];
+                    } else {
+                        currentText += ' ';
+                    }
+                }
+                
+                textElement.textContent = currentText;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        function toggleEncryption() {
+            if (isEncrypted) {
+                animateText(encryptedText, originalText, 1000);
+            } else {
+                animateText(originalText, encryptedText, 1000);
+            }
+            isEncrypted = !isEncrypted;
+        }
+    </script>
+</body>
+</html>

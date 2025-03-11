@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firewall Visualization</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+        #firewall {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            background-color: #ff0000;
+        }
+        .packet {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .allowed {
+            background-color: #00ff00;
+        }
+        .blocked {
+            background-color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div id="firewall"></div>
+    <script>
+        const firewall = document.getElementById('firewall');
+        const firewallX = firewall.offsetLeft;
+
+        function createPacket() {
+            const packet = document.createElement('div');
+            packet.classList.add('packet');
+            packet.style.left = '0px';
+            packet.style.top = Math.random() * window.innerHeight + 'px';
+            
+            const isAllowed = Math.random() > 0.3;
+            packet.classList.add(isAllowed ? 'allowed' : 'blocked');
+            
+            document.body.appendChild(packet);
+
+            const animation = packet.animate([
+                { left: '0px' },
+                { left: isAllowed ? '100%' : firewallX + 'px' }
+            ], {
+                duration: 2000,
+                easing: 'linear'
+            });
+
+            animation.onfinish = () => {
+                document.body.removeChild(packet);
+            };
+        }
+
+        setInterval(createPacket, 200);
+    </script>
+</body>
+</html>
